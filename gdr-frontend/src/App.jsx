@@ -23,7 +23,6 @@ import CharacterMessages from './pages/character/CharacterMessages';
 import CharacterDice from './pages/character/CharacterDice';
 import CharacterChat from './pages/character/CharacterChat';
 import MainLayout from './layouts/MainLayout';
-
 import { AuthProvider } from './contexts/AuthContext';
 
 function App() {
@@ -36,47 +35,35 @@ function App() {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/dashboard" element={<DashboardPage />} />
-
             <Route path="/create-character" element={<ProtectedRoute />}>
               <Route index element={<CreateCharacter />} />
             </Route>
-
             <Route path="/edit-character/:id" element={<ProtectedRoute />}>
               <Route index element={<EditCharacter />} />
             </Route>
-
             <Route path="/skills" element={<ProtectedRoute requiredRole="admin" />}>
               <Route index element={<ManageSkills />} />
             </Route>
-
             <Route path="/dice" element={<DiceLogger />} />
-
             <Route path="/admin" element={<ProtectedRoute requiredRole="admin" />}>
               <Route index element={<AdminDashboard />} />
             </Route>
-
             <Route path="/visual-editor" element={<VisualEditor />} />
-
             <Route path="/full-editor" element={<ProtectedRoute requiredRole="gestore" />}>
               <Route index element={<FullEditor />} />
             </Route>
-
             <Route path="/roles" element={<ProtectedRoute requiredRole="gestore" />}>
               <Route index element={<RoleManager />} />
             </Route>
-
             <Route path="/audit" element={<ProtectedRoute requiredRole="gestore" />}>
               <Route index element={<AuditLog />} />
             </Route>
-
             <Route path="/spettatore" element={<ProtectedRoute requiredRole="gestore" />}>
               <Route index element={<SpectatorView />} />
             </Route>
-
             <Route path="/event" element={<ProtectedRoute requiredRole="master" />}>
               <Route index element={<CreateEvent />} />
             </Route>
-
             <Route path="/character/:id" element={<CharacterSheet />}>
               <Route index element={<CharacterProfile />} />
               <Route path="stats" element={<CharacterStats />} />
