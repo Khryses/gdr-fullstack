@@ -1,0 +1,277 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  banned Boolean @default(false)
+  banLivello Int? @default(0)
+  banScadenza DateTime?
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  username  String   @unique
+  ruolo     Role
+  stato     Stato
+  createdAt DateTime @default(now())
+  characters Character[]
+}
+
+model Character {
+  invisibile Boolean @default(false)
+  online Boolean @default(false)
+  posizione String?
+  monete Int @default(0)
+  id           String     @id @default(uuid())
+  nome         String
+  razza        Razza
+  livello      Int
+  esperienza   Int
+  reputazione  Int
+  fazione      String?
+  visibile     Boolean    @default(true)
+  createdAt    DateTime   @default(now())
+  user         User       @relation(fields: [userId], references: [id])
+  userId       String
+  statistiche  Statistica[]
+  messaggi     ChatMessage[]
+  xpLogs       XPLog[]
+  repLogs      ReputazioneLog[]
+}
+
+model Statistica {
+  id          String   @id @default(uuid())
+  tipo        String
+  valore      Int
+  character   Character @relation(fields: [characterId], references: [id])
+  characterId String
+}
+
+model ChatRoom {
+  id        String   @id @default(uuid())
+  nome      String
+  privata   Boolean
+  createdAt DateTime @default(now())
+  messaggi  ChatMessage[]
+}
+
+model ChatMessage {
+  id          String     @id @default(uuid())
+  tipo        MessaggioTipo
+  contenuto   String
+  visibile    Boolean
+  timestamp   DateTime   @default(now())
+  room        ChatRoom   @relation(fields: [roomId], references: [id])
+  roomId      String
+  character   Character  @relation(fields: [characterId], references: [id])
+  characterId String
+}
+
+model XPLog {
+  id          String     @id @default(uuid())
+  descrizione String
+  valore      Int
+  data        DateTime   @default(now())
+  character   Character  @relation(fields: [characterId], references: [id])
+  characterId String
+}
+
+model ReputazioneLog {
+  id          String     @id @default(uuid())
+  motivo      String
+  valore      Int
+  visibile    Boolean    @default(true)
+  data        DateTime   @default(now())
+  character   Character  @relation(fields: [characterId], references: [id])
+  characterId String
+}
+
+enum Role {
+  player
+  master
+  admin
+}
+
+enum Stato {
+  attivo
+  bloccato
+  cancellato
+}
+
+enum Razza {
+  varghul
+  umano
+  naga
+}
+
+enum MessaggioTipo {
+  azione
+  dialogo
+  pensiero
+  sistema
+  master
+}
+
+
+model Notifica {
+  id            String   @id @default(uuid())
+  destinatario  User     @relation(fields: [destinatarioId], references: [id])
+  destinatarioId String
+  messaggio     String
+  tipo          String
+  letta         Boolean  @default(false)
+  timestamp     DateTime @default(now())
+}
+
+
+model Ticket {
+  id          String   @id @default(uuid())
+  creatore    User     @relation(fields: [creatoreId], references: [id])
+  creatoreId  String
+  contenuto   String
+  stato       String   @default("aperto") // aperto, in_corso, chiuso
+  priorita    String   @default("media")  // bassa, media, alta
+  timestamp   DateTime @default(now())
+}
+
+
+model CommentoTicket {
+  id        String   @id @default(uuid())
+  ticket    Ticket   @relation(fields: [ticketId], references: [id])
+  ticketId  String
+  autore    User     @relation(fields: [autoreId], references: [id])
+  autoreId  String
+  testo     String
+  timestamp DateTime @default(now())
+}
+
+
+model Quest {
+  xpRicompensa Int?
+  id            String   @id @default(uuid())
+  titolo        String
+  descrizione   String
+  stato         String   @default("disponibile") // disponibile, assegnata, completata
+  personaggio   Character? @relation(fields: [characterId], references: [id])
+  characterId   String?
+  creatore      User     @relation(fields: [creatoreId], references: [id])
+  creatoreId    String
+  timestamp     DateTime @default(now())
+}
+
+
+model PostBacheca {
+  visualizzazioni Int @default(0)
+  tag String?
+  visibilita String   // on_game, off_game, staff
+  id         String   @id @default(uuid())
+  autore     User     @relation(fields: [autoreId], references: [id])
+  autoreId   String
+  titolo     String
+  contenuto  String
+  tipo       String   // diario, evento, giocata
+  timestamp  DateTime @default(now())
+}
+
+
+model CommentoPostBacheca {
+  id        String   @id @default(uuid())
+  post      PostBacheca @relation(fields: [postId], references: [id])
+  postId    String
+  autore    User     @relation(fields: [autoreId], references: [id])
+  autoreId  String
+  testo     String
+  timestamp DateTime @default(now())
+}
+
+
+model OggettoInventario {
+  note String?
+  categoria CategoriaOggetto @default(altro)
+  id             String   @id @default(uuid())
+  nome           String
+  descrizione    String
+  quantita       Int      @default(1)
+  valoreAcquisto Int
+  valoreVendita  Int
+  svalutazione   Int      @default(30) // percentuale
+  character      Character @relation(fields: [characterId], references: [id])
+  characterId    String
+  timestamp      DateTime @default(now())
+}
+
+
+enum CategoriaOggetto {
+  equipaggiamento
+  consumabile
+  materiale
+  chiave
+  altro
+}
+
+
+model TrasferimentoOggetto {
+  id             String   @id @default(uuid())
+  oggetto        OggettoInventario @relation(fields: [oggettoId], references: [id])
+  oggettoId      String
+  daCharacter    Character @relation("Da", fields: [daId], references: [id])
+  daId           String
+  aCharacter     Character @relation("A", fields: [aId], references: [id])
+  aId            String
+  quantita       Int
+  timestamp      DateTime @default(now())
+}
+
+
+model ReazionePost {
+  id       String   @id @default(uuid())
+  tipo     String
+  utente   User     @relation(fields: [utenteId], references: [id])
+  utenteId String
+  post     PostBacheca @relation(fields: [postId], references: [id])
+  postId   String
+}
+
+
+model LogMaster {
+  id        String   @id @default(uuid())
+  autore    User     @relation(fields: [autoreId], references: [id])
+  autoreId  String
+  azione    String
+  oggettoId String?
+  timestamp DateTime @default(now())
+}
+
+
+model Mappa {
+  id          String   @id @default(uuid())
+  nome        String
+  descrizione String?
+  immagine    String?
+  luoghi      Luogo[]
+  principale  Boolean  @default(false)
+}
+
+model Luogo {
+  id        String   @id @default(uuid())
+  nome      String
+  descrizione String?
+  mappa     Mappa    @relation(fields: [mappaId], references: [id])
+  mappaId   String
+  chatAttiva Boolean @default(true)
+}
+
+
+model TransazioneMonetaria {
+  id             String   @id @default(uuid())
+  mittente       Character @relation("Mittente", fields: [mittenteId], references: [id])
+  mittenteId     String
+  destinatario   Character @relation("Destinatario", fields: [destinatarioId], references: [id])
+  destinatarioId String
+  importo        Int
+  timestamp      DateTime @default(now())
+}

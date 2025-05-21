@@ -1,0 +1,1 @@
+exports.getNotifiche = (req, res) => res.json({ message: 'Lista notifiche' });
