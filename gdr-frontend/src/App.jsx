@@ -70,8 +70,8 @@ function App() {
             </Route>
 
             <Route path="/spettatore" element={<ProtectedRoute requiredRole="gestore" />}>
-  <Route index element={<SpectatorView />} />
-</Route>
+              <Route index element={<SpectatorView />} />
+            </Route>
 
             <Route path="/event" element={<ProtectedRoute requiredRole="master" />}>
               <Route index element={<CreateEvent />} />
