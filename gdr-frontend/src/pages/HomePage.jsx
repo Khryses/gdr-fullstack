@@ -1,16 +1,13 @@
 
 import React from "react";
-import Navbar from "../components/Navbar";
 import "../styles/HomePage.css";
+import Navbar from "../components/Navbar";
 
 const HomePage = () => {
   return (
-    <div className="homepage">
+    <div className="home-container">
       <Navbar />
-      <div className="hero-text">
-        <h1>BENVENUTO A EODUM</h1>
-        <p>Un gioco di ruolo urban-fantasy ambientato nel 2500.</p>
-      </div>
+      <h1 style={{ fontSize: "2rem", color: "#b0e0e6" }}>Benvenuto su Eodum</h1>
     </div>
   );
 };

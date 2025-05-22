@@ -1,24 +1,16 @@
 
-.homepage {
-  background: radial-gradient(#0f0f0f, #000000);
+.home-container {
   height: 100vh;
-  color: #00f0ff;
+  width: 100vw;
+  background-image: url("/assets/bg-eodum.jpg");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-family: 'Orbitron', sans-serif;
-  padding-top: 5rem;
-}
-
-.hero-text h1 {
-  font-size: 3rem;
-  margin: 0;
-  text-shadow: 0 0 10px #00f0ff;
-}
-
-.hero-text p {
-  font-size: 1.2rem;
-  margin-top: 1rem;
-  color: #ccc;
+  color: #e0f7fa;
+  font-family: "Orbitron", sans-serif;
 }
