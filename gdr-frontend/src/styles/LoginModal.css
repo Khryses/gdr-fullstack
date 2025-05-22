@@ -20,8 +20,8 @@
   max-width: 90vw;
   color: #0ff;
   font-family: 'Orbitron', sans-serif;
-  position: relative;
   box-shadow: 0 0 20px #0ff;
+  cursor: move;
 }
 
 .login-modal h2 {
