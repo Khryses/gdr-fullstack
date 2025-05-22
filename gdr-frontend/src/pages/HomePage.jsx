@@ -1,17 +1,17 @@
 
 import React from "react";
-import DarkLayout from "../layouts/DarkLayout";
+import Navbar from "../components/Navbar";
 import "../styles/HomePage.css";
 
 const HomePage = () => {
   return (
-    <DarkLayout>
-      <section className="hero">
-        <div className="background-animation"></div>
-        <h1 className="title">La città dimenticata non dorme mai</h1>
-        <p className="subtitle">Scopri il tuo destino a Eodum</p>
-      </section>
-    </DarkLayout>
+    <div className="homepage">
+      <Navbar />
+      <div className="hero-text">
+        <h1>BENVENUTO A EODUM</h1>
+        <p>Un gioco di ruolo urban-fantasy ambientato nel 2500.</p>
+      </div>
+    </div>
   );
 };
 
