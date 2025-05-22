@@ -1,0 +1,24 @@
+
+.cookie-banner {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: rgba(10, 10, 10, 0.95);
+  color: #ccc;
+  text-align: center;
+  padding: 1rem;
+  font-size: 0.9rem;
+  z-index: 9999;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.cookie-banner button {
+  margin-left: 1rem;
+  padding: 0.5rem 1rem;
+  background: #0ff;
+  border: none;
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+}
