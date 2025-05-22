@@ -10,7 +10,15 @@ const LoginModal = ({ onClose }) => {
         <input type="email" placeholder="Email" />
         <input type="password" placeholder="Password" />
         <button className="modal-action">Accedi</button>
-        <p className="modal-footer">Hai dimenticato la password?</p>
+       <p
+  className="modal-footer"
+  onClick={() => {
+    onClose(); // chiude la modale login
+    window.dispatchEvent(new Event("openForgotPasswordModal")); // apre il recupero
+  }}
+>
+  Hai dimenticato la password?
+</p>
       </div>
     </div>
   );
