@@ -1,6 +1,6 @@
 
 import React, { useState } from "react";
-import "./RegisterPage.css";
+import "../styles/RegisterPage.css";
 
 const RegisterPage = () => {
   const [form, setForm] = useState({ email: "", password: "", username: "" });
