@@ -1,0 +1,49 @@
+
+.hero {
+  text-align: center;
+  padding: 8rem 2rem;
+  background: radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%);
+  color: #0ff;
+}
+
+.hero .title {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 10px #0ff;
+}
+
+.hero .subtitle {
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+  color: #ccc;
+}
+
+.cta-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.btn {
+  padding: 0.75rem 2rem;
+  border: 2px solid #0ff;
+  color: #0ff;
+  background: transparent;
+  text-decoration: none;
+  transition: 0.3s;
+}
+
+.btn:hover {
+  background: #0ff;
+  color: #000;
+}
+
+.btn.alt {
+  border-color: #f0f;
+  color: #f0f;
+}
+
+.btn.alt:hover {
+  background: #f0f;
+  color: #000;
+}
