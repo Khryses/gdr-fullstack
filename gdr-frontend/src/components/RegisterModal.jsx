@@ -1,7 +1,25 @@
 
 import React, { useState } from "react";
-import Draggable from "react-draggable";
+import { DndContext, useDraggable } from "@dnd-kit/core";
 import "../styles/Modal.css";
+
+function DraggableModal({ children }) {
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({
+    id: "draggable-modal"
+  });
+
+  const style = {
+    transform: transform ? `translate3d(${transform.x}px, ${transform.y}px, 0)` : undefined,
+    position: "absolute",
+    zIndex: 1000,
+  };
+
+  return (
+    <div ref={setNodeRef} style={style} {...listeners} {...attributes}>
+      {children}
+    </div>
+  );
+}
 
 const RegisterModal = ({ onClose }) => {
   const [accepted, setAccepted] = useState(false);
@@ -31,56 +49,58 @@ const RegisterModal = ({ onClose }) => {
 
   return (
     <div className="modal-overlay">
-      <Draggable handle=".modal-header">
-        <div className="modal-box">
-          <div className="modal-header">
-            <button className="close-button" onClick={onClose}>×</button>
-            <h2>Registrazione Personaggio</h2>
-          </div>
+      <DndContext>
+        <DraggableModal>
+          <div className="modal-box">
+            <div className="modal-header">
+              <button className="close-button" onClick={onClose}>×</button>
+              <h2>Registrazione Personaggio</h2>
+            </div>
 
-          {!accepted ? (
-            <>
-              <div className="disclaimer">
-                <p>
-                  Questo è un gioco di ruolo ambientato in un mondo fittizio. Ogni riferimento a fatti o persone reali è puramente casuale. <br />
-                  Il gioco è vietato ai minori di 18 anni. Accedendo confermi di aver letto e accettato i Termini di Servizio e l'Informativa Privacy.
-                </p>
-              </div>
-              <button className="modal-action" onClick={() => setAccepted(true)}>Accetto</button>
-            </>
-          ) : !confirmation ? (
-            <>
-              <input type="text" placeholder="Nome" />
-              <input type="text" placeholder="Cognome" />
-              <input type="email" placeholder="Email" />
-              <select>
-                <option>Seleziona razza</option>
-                <option>Umano</option>
-                <option>Varghul</option>
-              </select>
-              <select>
-                <option>Seleziona sesso</option>
-                <option>Maschio</option>
-                <option>Femmina</option>
-                <option>Nonbinary</option>
-                <option>Altro</option>
-              </select>
-              <p>Distribuisci {pointsLeft} punti:</p>
-              {Object.keys(stats).map(key => (
-                <div key={key}>
-                  {key.charAt(0).toUpperCase() + key.slice(1)}:
-                  <button onClick={() => updateStat(key, -1)}>-</button>
-                  <span>{stats[key]}</span>
-                  <button onClick={() => updateStat(key, 1)}>+</button>
+            {!accepted ? (
+              <>
+                <div className="disclaimer">
+                  <p>
+                    Questo è un gioco di ruolo ambientato in un mondo fittizio. Ogni riferimento a fatti o persone reali è puramente casuale. <br />
+                    Il gioco è vietato ai minori di 18 anni. Accedendo confermi di aver letto e accettato i Termini di Servizio e l'Informativa Privacy.
+                  </p>
                 </div>
-              ))}
-              <button className="modal-action" onClick={() => setConfirmation(true)}>Registrati</button>
-            </>
-          ) : (
-            <p className="confirmation-text">Registrazione completata con successo!</p>
-          )}
-        </div>
-      </Draggable>
+                <button className="modal-action" onClick={() => setAccepted(true)}>Accetto</button>
+              </>
+            ) : !confirmation ? (
+              <>
+                <input type="text" placeholder="Nome" />
+                <input type="text" placeholder="Cognome" />
+                <input type="email" placeholder="Email" />
+                <select>
+                  <option>Seleziona razza</option>
+                  <option>Umano</option>
+                  <option>Varghul</option>
+                </select>
+                <select>
+                  <option>Seleziona sesso</option>
+                  <option>Maschio</option>
+                  <option>Femmina</option>
+                  <option>Nonbinary</option>
+                  <option>Altro</option>
+                </select>
+                <p>Distribuisci {pointsLeft} punti:</p>
+                {Object.keys(stats).map(key => (
+                  <div key={key}>
+                    {key.charAt(0).toUpperCase() + key.slice(1)}:
+                    <button onClick={() => updateStat(key, -1)}>-</button>
+                    <span>{stats[key]}</span>
+                    <button onClick={() => updateStat(key, 1)}>+</button>
+                  </div>
+                ))}
+                <button className="modal-action" onClick={() => setConfirmation(true)}>Registrati</button>
+              </>
+            ) : (
+              <p className="confirmation-text">Registrazione completata con successo!</p>
+            )}
+          </div>
+        </DraggableModal>
+      </DndContext>
     </div>
   );
 };
