@@ -1,0 +1,94 @@
+
+.register-sheet-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: none;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.register-sheet {
+  background: #f2e7d5;
+  border: 2px solid #7e0000;
+  padding: 2rem;
+  width: 750px;
+  max-width: 95vw;
+  font-family: 'Georgia', serif;
+  color: #111;
+  box-shadow: 5px 5px 0px #400000;
+  position: relative;
+}
+
+.register-sheet h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  border-bottom: 2px solid #7e0000;
+  padding-bottom: 0.5rem;
+}
+
+.register-sheet form input,
+.register-sheet form select,
+.register-sheet form button {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  border: 1px solid #7e0000;
+  background: white;
+  font-family: inherit;
+}
+
+.register-sheet form button {
+  background: #7e0000;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.stat-box {
+  background: #fffaf2;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-direction: column;
+}
+
+.stat-box label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.stat-box div {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.stat-box button {
+  padding: 0.25rem 0.75rem;
+  background: #7e0000;
+  color: white;
+  border: none;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.info {
+  font-size: 0.9rem;
+  color: #555;
+  text-align: center;
+}
