@@ -1,4 +1,3 @@
-
 import React from "react";
 import DarkLayout from "../layouts/DarkLayout";
 import "../styles/HomePage.css";
