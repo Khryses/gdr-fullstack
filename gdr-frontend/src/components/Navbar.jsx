@@ -13,10 +13,10 @@ const Navbar = () => {
 
   return (
     <nav className="navbar">
-      <div className="logo">EODUM</div>
-      <div className="nav-links">
-        <button className="nav-button" onClick={openLogin}>Accedi</button>
-        <button className="nav-button" onClick={openRegister}>Registrati</button>
+      <div className="navbar-logo">EODUM</div>
+      <div className="navbar-buttons">
+        <button onClick={openLogin}>Accedi</button>
+        <button onClick={openRegister}>Registrati</button>
       </div>
     </nav>
   );
