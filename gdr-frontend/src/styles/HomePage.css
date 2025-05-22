@@ -1,49 +1,42 @@
 
 .hero {
+  position: relative;
   text-align: center;
   padding: 8rem 2rem;
-  background: radial-gradient(ellipse at center, #1a1a1a 0%, #000000 100%);
+  background-color: #000;
+  overflow: hidden;
   color: #0ff;
 }
 
-.hero .title {
+.background-animation {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle, rgba(0,255,255,0.1) 0%, rgba(0,0,0,0.9) 70%);
+  animation: flicker 4s infinite ease-in-out alternate;
+  z-index: 0;
+}
+
+@keyframes flicker {
+  0% { opacity: 0.9; }
+  50% { opacity: 1; }
+  100% { opacity: 0.95; }
+}
+
+.title, .subtitle {
+  position: relative;
+  z-index: 1;
+}
+
+.title {
   font-size: 3rem;
   margin-bottom: 1rem;
-  text-shadow: 0 0 10px #0ff;
+  text-shadow: 0 0 15px #0ff;
 }
 
-.hero .subtitle {
+.subtitle {
   font-size: 1.5rem;
-  margin-bottom: 2rem;
   color: #ccc;
-}
-
-.cta-buttons {
-  display: flex;
-  justify-content: center;
-  gap: 2rem;
-}
-
-.btn {
-  padding: 0.75rem 2rem;
-  border: 2px solid #0ff;
-  color: #0ff;
-  background: transparent;
-  text-decoration: none;
-  transition: 0.3s;
-}
-
-.btn:hover {
-  background: #0ff;
-  color: #000;
-}
-
-.btn.alt {
-  border-color: #f0f;
-  color: #f0f;
-}
-
-.btn.alt:hover {
-  background: #f0f;
-  color: #000;
 }
