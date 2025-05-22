@@ -1,0 +1,89 @@
+
+.sheet-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: none;
+  z-index: 1000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sheet {
+  background: #f2e7d5;
+  border: 2px solid #7e0000;
+  padding: 2rem;
+  width: 700px;
+  max-width: 95vw;
+  font-family: 'Georgia', serif;
+  color: #111;
+  box-shadow: 5px 5px 0px #400000;
+  position: relative;
+}
+
+.sheet h2 {
+  text-align: center;
+  margin-bottom: 1rem;
+  font-size: 1.8rem;
+  letter-spacing: 2px;
+  border-bottom: 2px solid #7e0000;
+  padding-bottom: 0.5rem;
+}
+
+.tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.tabs button {
+  background: #7e0000;
+  border: none;
+  color: white;
+  padding: 0.5rem 1rem;
+  font-family: inherit;
+  cursor: pointer;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.content {
+  background: #fffaf2;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  height: 200px;
+  overflow-y: auto;
+}
+
+.sheet form input,
+.sheet form button {
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 1rem;
+  font-size: 1rem;
+  border: 1px solid #7e0000;
+  background: white;
+  font-family: inherit;
+}
+
+.sheet form button {
+  background: #7e0000;
+  color: white;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.close-button {
+  position: absolute;
+  top: 0.75rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  color: #7e0000;
+  cursor: pointer;
+}
