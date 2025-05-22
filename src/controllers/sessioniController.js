@@ -1,1 +1,0 @@
-exports.getSessioni = (req, res) => res.json({ message: 'Storico sessioni' });

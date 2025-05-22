@@ -1,1 +1,0 @@
-exports.getBlacklist = (req, res) => res.json({ message: 'Utenti ignorati' });
