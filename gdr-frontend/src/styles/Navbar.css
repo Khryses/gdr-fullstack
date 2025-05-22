@@ -1,0 +1,37 @@
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 2rem;
+  background-color: #111;
+  border-bottom: 2px solid #00f0ff;
+  font-family: 'Orbitron', sans-serif;
+}
+
+.logo {
+  color: #00f0ff;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.nav-links {
+  display: flex;
+  gap: 1rem;
+}
+
+.nav-button {
+  background: none;
+  color: #00f0ff;
+  border: 1px solid #00f0ff;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.95rem;
+  transition: background 0.3s, color 0.3s;
+}
+
+.nav-button:hover {
+  background-color: #00f0ff;
+  color: #000;
+}

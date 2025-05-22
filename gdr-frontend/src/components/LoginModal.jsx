@@ -9,7 +9,6 @@ const LoginModal = ({ onClose }) => {
     const email = form.get("email");
     const password = form.get("password");
     console.log("Login attempt", { email, password });
-    // Da collegare a backend login
     onClose();
   };
 
@@ -23,12 +22,16 @@ const LoginModal = ({ onClose }) => {
           <input name="password" type="password" placeholder="Password" required />
           <button type="submit">Accedi</button>
         </form>
-        <a href="#" className="forgot-link" onClick={(e) => {
-          e.preventDefault();
-          const event = new CustomEvent("openForgotPasswordModal");
-          window.dispatchEvent(event);
-          onClose();
-        }}>
+        <a
+          href="#"
+          className="forgot-link"
+          onClick={(e) => {
+            e.preventDefault();
+            const event = new CustomEvent("openForgotPasswordModal");
+            window.dispatchEvent(event);
+            onClose();
+          }}
+        >
           Hai dimenticato la password?
         </a>
       </div>

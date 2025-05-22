@@ -24,7 +24,7 @@ const ForgotPasswordModal = ({ onClose }) => {
       <div className="login-modal">
         <button className="close-button" onClick={onClose}>✖</button>
         {submitted ? (
-          <p>Ti abbiamo inviato un link di recupero password (se l'email è registrata).</p>
+          <p>Controlla la tua email per il link di recupero.</p>
         ) : (
           <>
             <h2>Recupera password</h2>
