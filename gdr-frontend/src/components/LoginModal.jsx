@@ -7,25 +7,23 @@ const LoginModal = ({ onClose }) => {
   const [password, setPassword] = useState("");
   const [forgotMode, setForgotMode] = useState(false);
   const modalRef = useRef(null);
-  const position = useRef({ x: 0, y: 0 });
-  const dragging = useRef(false);
-  const offset = useRef({ x: 0, y: 0 });
+  const [position, setPosition] = useState({ x: 100, y: 100 });
+  const [dragging, setDragging] = useState(false);
+  const dragStart = useRef({ x: 0, y: 0 });
 
   useEffect(() => {
     const handleMouseMove = (e) => {
-      if (!dragging.current) return;
-      const newX = e.clientX - offset.current.x;
-      const newY = e.clientY - offset.current.y;
-      position.current = { x: newX, y: newY };
-      if (modalRef.current) {
-        modalRef.current.style.left = `${newX}px`;
-        modalRef.current.style.top = `${newY}px`;
-      }
+      if (!dragging) return;
+      const dx = e.clientX - dragStart.current.x;
+      const dy = e.clientY - dragStart.current.y;
+      setPosition((prev) => ({
+        x: prev.x + dx,
+        y: prev.y + dy
+      }));
+      dragStart.current = { x: e.clientX, y: e.clientY };
     };
 
-    const handleMouseUp = () => {
-      dragging.current = false;
-    };
+    const handleMouseUp = () => setDragging(false);
 
     window.addEventListener("mousemove", handleMouseMove);
     window.addEventListener("mouseup", handleMouseUp);
@@ -33,12 +31,11 @@ const LoginModal = ({ onClose }) => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
     };
-  }, []);
+  }, [dragging]);
 
   const handleMouseDown = (e) => {
-    dragging.current = true;
-    const rect = modalRef.current.getBoundingClientRect();
-    offset.current = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    setDragging(true);
+    dragStart.current = { x: e.clientX, y: e.clientY };
   };
 
   const handleSubmit = (e) => {
@@ -51,18 +48,13 @@ const LoginModal = ({ onClose }) => {
     onClose();
   };
 
-  const toggleForgot = (e) => {
-    e.preventDefault();
-    setForgotMode(!forgotMode);
-  };
-
   return (
     <div className="modal-overlay" onClick={onClose}>
       <div
         className="login-modal"
         ref={modalRef}
         onClick={(e) => e.stopPropagation()}
-        style={{ position: "absolute", left: "50%", top: "50%", transform: "translate(-50%, -50%)" }}
+        style={{ left: position.x, top: position.y, position: "fixed" }}
       >
         <div className="modal-header" onMouseDown={handleMouseDown}>
           <h2>{forgotMode ? "Recupera Password" : "Accedi a Eodum"}</h2>
@@ -87,7 +79,7 @@ const LoginModal = ({ onClose }) => {
           )}
           <button type="submit">{forgotMode ? "Invia link" : "Accedi"}</button>
         </form>
-        <a href="#" className="forgot-link" onClick={toggleForgot}>
+        <a href="#" className="forgot-link" onClick={(e) => { e.preventDefault(); setForgotMode(!forgotMode); }}>
           {forgotMode ? "Torna al login" : "Hai dimenticato la password?"}
         </a>
       </div>

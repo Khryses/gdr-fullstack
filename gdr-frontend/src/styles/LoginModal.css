@@ -6,9 +6,6 @@
   width: 100vw;
   height: 100vh;
   background: rgba(0, 0, 0, 0.85);
-  display: flex;
-  align-items: center;
-  justify-content: center;
   z-index: 1000;
 }
 
@@ -17,10 +14,10 @@
   border: 2px solid #0ff;
   padding: 2rem;
   width: 400px;
-  max-width: 90vw;
   color: #0ff;
   font-family: 'Orbitron', sans-serif;
   box-shadow: 0 0 20px #0ff;
+  position: fixed;
 }
 
 .modal-header {
@@ -32,9 +29,8 @@
 }
 
 .login-modal h2 {
-  text-align: left;
-  margin: 0;
   font-size: 1.25rem;
+  margin: 0;
 }
 
 .login-modal form {
