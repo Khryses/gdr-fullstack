@@ -3,7 +3,7 @@
 Il progetto è diviso in due cartelle principali:
 
 ### 📁 `backend/`
-- Express.js + MongoDB
+- Express.js + PostgreSQL
 - Socket.IO
 - Middleware JWT
 - Modelli Mongoose (`User`, `Character`, `Event`, ecc.)
