@@ -18,7 +18,11 @@ const LoginModal = () => {
       <h2>Accedi a Eodum</h2>
       <input type="email" placeholder="Email" required />
       <input type="password" placeholder="Password" required />
-      <select value={mode} onChange={(e) => setMode(e.target.value)} style={{ width: '100%', padding: '10px', marginBottom: '15px' }}>
+      <select
+        value={mode}
+        onChange={(e) => setMode(e.target.value)}
+        style={{ width: '100%', padding: '10px', marginBottom: '15px' }}
+      >
         <option value="tab">Apri in nuova scheda</option>
         <option value="popup">Apri in popup</option>
       </select>
