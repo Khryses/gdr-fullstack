@@ -16,7 +16,7 @@
   align-items: center;
 }
 
-.modal input {
+.modal input, .modal select {
   margin-bottom: 15px;
   width: 100%;
   padding: 10px;
@@ -36,12 +36,4 @@
 
 .modal button:hover {
   background-color: #00e5ff;
-}
-
-body, html {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  width: 100vw;
-  height: 100vh;
 }
