@@ -1,25 +1,14 @@
-import React from "react";
-import "../styles/Modal.css";
+import React from 'react';
+import '../styles/modal.css';
 
-const LoginModal = ({ onClose }) => {
+const LoginModal = () => {
   return (
-    <div className="modal-overlay">
-      <div className="modal-box">
-        <button className="close-button" onClick={onClose}>×</button>
-        <h2>Accedi a Eodum</h2>
-        <input type="email" placeholder="Email" />
-        <input type="password" placeholder="Password" />
-        <button className="modal-action">Accedi</button>
-       <p
-  className="modal-footer"
-  onClick={() => {
-    onClose(); // chiude la modale login
-    window.dispatchEvent(new Event("openForgotPasswordModal")); // apre il recupero
-  }}
->
-  Hai dimenticato la password?
-</p>
-      </div>
+    <div className="modal">
+      <h2>Accedi a Eodum</h2>
+      <input type="email" placeholder="Email" required />
+      <input type="password" placeholder="Password" required />
+      <button>Accedi</button>
+      <a href="#">Hai dimenticato la password?</a>
     </div>
   );
 };
