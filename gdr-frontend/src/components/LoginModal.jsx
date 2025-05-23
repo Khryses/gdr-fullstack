@@ -6,7 +6,6 @@ const LoginModal = ({ onClose }) => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    // qui fai la tua logica di login
     const url = "/land";
     if (mode === 'popup') {
       window.open(url, 'EodumLand', 'width=1024,height=768');
@@ -19,13 +18,19 @@ const LoginModal = ({ onClose }) => {
     <div className="modal">
       <h2>Accedi a Eodum</h2>
       <form onSubmit={handleLogin} style={{ width: '100%' }}>
+        <label htmlFor="login-email" className="sr-only">Email</label>
         <input
+          id="login-email"
+          name="email"
           type="email"
           placeholder="Email"
           required
           autoComplete="email"
         />
+        <label htmlFor="login-password" className="sr-only">Password</label>
         <input
+          id="login-password"
+          name="password"
           type="password"
           placeholder="Password"
           required
@@ -40,7 +45,9 @@ const LoginModal = ({ onClose }) => {
           <option value="popup">Apri in popup</option>
         </select>
         <button type="submit">Accedi</button>
-        <button type="button" onClick={onClose}>Chiudi</button>
+        <button type="button" onClick={onClose} style={{ marginTop: '10px' }}>
+          Chiudi
+        </button>
       </form>
       <a href="#">Hai dimenticato la password?</a>
     </div>
@@ -48,4 +55,3 @@ const LoginModal = ({ onClose }) => {
 };
 
 export default LoginModal;
-
