@@ -1,3 +1,4 @@
+// src/App.jsx
 import React, { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
@@ -5,15 +6,15 @@ import LoginModal from "./components/LoginModal";
 import RegisterModal from "./components/RegisterModal";
 import ForgotPasswordModal from "./components/ForgotPasswordModal";
 
-function App() {
+export default function App() {
   const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
   const [showForgot, setShowForgot] = useState(false);
 
   useEffect(() => {
-    const handleForgot = () => setShowForgot(true);
-    window.addEventListener("openForgotPasswordModal", handleForgot);
-    return () => window.removeEventListener("openForgotPasswordModal", handleForgot);
+    const onForgot = () => setShowForgot(true);
+    window.addEventListener("openForgotPasswordModal", onForgot);
+    return () => window.removeEventListener("openForgotPasswordModal", onForgot);
   }, []);
 
   return (
@@ -29,5 +30,3 @@ function App() {
     </>
   );
 }
-
-export default App;

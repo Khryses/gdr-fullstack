@@ -1,7 +1,8 @@
+// src/components/Navbar.jsx
 import React from "react";
 import "../styles/Navbar.css";
 
-const Navbar = ({ onLogin, onRegister }) => {
+export default function Navbar({ onLogin, onRegister }) {
   return (
     <nav className="navbar">
       <div className="navbar-logo">EODUM</div>
@@ -11,6 +12,4 @@ const Navbar = ({ onLogin, onRegister }) => {
       </div>
     </nav>
   );
-};
-
-export default Navbar;
+}
