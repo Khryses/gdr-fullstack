@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
@@ -11,28 +10,29 @@ export default function App() {
   const [showRegister, setShowRegister] = useState(false);
   const [showForgot, setShowForgot] = useState(false);
 
-  // Solo se vuoi ancora l’evento forgot pw:
   useEffect(() => {
-    const onForgot = () => setShowForgot(true);
-    window.addEventListener("openForgotPasswordModal", onForgot);
-    return () => window.removeEventListener("openForgotPasswordModal", onForgot);
+    const handleLogin = () => setShowLogin(true);
+    const handleRegister = () => setShowRegister(true);
+    const handleForgot = () => setShowForgot(true);
+
+    window.addEventListener("openLoginModal", handleLogin);
+    window.addEventListener("openRegisterModal", handleRegister);
+    window.addEventListener("openForgotPasswordModal", handleForgot);
+
+    return () => {
+      window.removeEventListener("openLoginModal", handleLogin);
+      window.removeEventListener("openRegisterModal", handleRegister);
+      window.removeEventListener("openForgotPasswordModal", handleForgot);
+    };
   }, []);
 
   return (
     <>
-      {/* **ECCO QUI**: passo SEMPRE onLogin/onRegister */}
-      <Navbar
-        onLogin={() => setShowLogin(true)}
-        onRegister={() => setShowRegister(true)}
-      />
+      <Navbar />
       <HomePage />
       {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
-      {showRegister && (
-        <RegisterModal onClose={() => setShowRegister(false)} />
-      )}
-      {showForgot && (
-        <ForgotPasswordModal onClose={() => setShowForgot(false)} />
-      )}
+      {showRegister && <RegisterModal onClose={() => setShowRegister(false)} />}
+      {showForgot && <ForgotPasswordModal onClose={() => setShowForgot(false)} />}
     </>
   );
 }
