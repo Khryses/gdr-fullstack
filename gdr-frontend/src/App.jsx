@@ -1,4 +1,3 @@
-// src/App.jsx
 import React, { useState, useEffect } from "react";
 import Navbar from "./components/Navbar";
 import HomePage from "./pages/HomePage";
@@ -12,17 +11,24 @@ export default function App() {
   const [showForgot, setShowForgot] = useState(false);
 
   useEffect(() => {
-    const onForgot = () => setShowForgot(true);
-    window.addEventListener("openForgotPasswordModal", onForgot);
-    return () => window.removeEventListener("openForgotPasswordModal", onForgot);
+    const handleLogin = () => setShowLogin(true);
+    const handleRegister = () => setShowRegister(true);
+    const handleForgot = () => setShowForgot(true);
+
+    window.addEventListener("openLoginModal", handleLogin);
+    window.addEventListener("openRegisterModal", handleRegister);
+    window.addEventListener("openForgotPasswordModal", handleForgot);
+
+    return () => {
+      window.removeEventListener("openLoginModal", handleLogin);
+      window.removeEventListener("openRegisterModal", handleRegister);
+      window.removeEventListener("openForgotPasswordModal", handleForgot);
+    };
   }, []);
 
   return (
     <>
-      <Navbar
-        onLogin={() => setShowLogin(true)}
-        onRegister={() => setShowRegister(true)}
-      />
+      <Navbar />
       <HomePage />
       {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
       {showRegister && <RegisterModal onClose={() => setShowRegister(false)} />}
