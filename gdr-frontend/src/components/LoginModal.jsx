@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDraggable } from '@dnd-kit/core';
 import '../styles/modal.css';
 
-export default function LoginModal({ onClose }) {
+export default function LoginModal({ onClose, onForgot }) {
   const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: 'login' });
   const style = transform
     ? {
@@ -41,6 +41,14 @@ export default function LoginModal({ onClose }) {
         <button type="submit">Accedi</button>
       </form>
       <a href="#" className="modal-link">Hai dimenticato la password?</a>
+      <button
+        type="button"
+        className="modal-link"
+        onClick={() => onForgot()}
+       style={{ background: 'none', border: 'none', color: 'cyan', cursor: 'pointer', textDecoration: 'underline', marginTop: '10px' }}
+      >
+        Hai dimenticato la password?
+     </button>
     </div>
   );
 }

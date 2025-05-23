@@ -18,7 +18,9 @@ export default function App() {
         onRegister={() => setShowRegister(true)}
       />
       <HomePage />
-      {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
+      {showLogin && <LoginModal onClose={() => setShowLogin(false)} onForgot={() => {
+            setShowLogin(false);
+           setShowForgot(true); }} />}
       {showRegister && <RegisterModal onClose={() => setShowRegister(false)} />}
       {showForgot && <ForgotPasswordModal onClose={() => setShowForgot(false)} />}
     </>
