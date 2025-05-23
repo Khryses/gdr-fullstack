@@ -7,9 +7,11 @@ const statsRoutes = require('./routes/statsRoutes');
 dotenv.config();
 
 const app = express();
+const authRoutes = require('./routes/auth');
 
 app.use(cors());
 app.use(express.json());
+app.use('/api/auth', authRoutes);
 
 app.use('/auth', authRoutes);
 app.use('/stats', statsRoutes);
