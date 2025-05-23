@@ -4,8 +4,7 @@ import '../styles/modal.css';
 const RegisterModal = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    // qui puoi gestire i dati inseriti
-    alert('Form inviato!');
+    alert('Registrazione inviata!');
   };
 
   return (

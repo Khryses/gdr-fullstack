@@ -5,7 +5,7 @@ const LoginModal = () => {
   const [mode, setMode] = useState('tab');
 
   const handleLogin = () => {
-    const url = "/land"; // URL della land (modifica se necessario)
+    const url = "/land";
     if (mode === 'popup') {
       window.open(url, 'EodumLand', 'width=1024,height=768');
     } else {
