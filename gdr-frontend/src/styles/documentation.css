@@ -1,0 +1,28 @@
+.documentation-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+}
+
+.doc-card {
+  background: #111;
+  border: 1px solid #444;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+  padding: 20px;
+  transition: transform 0.2s ease;
+}
+
+.doc-card:hover {
+  transform: translateY(-10px);
+}
+
+@media (max-width: 600px) {
+  .documentation-container {
+    padding: 10px;
+  }
+  .doc-card {
+    padding: 15px;
+  }
+}
