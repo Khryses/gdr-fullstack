@@ -1,44 +1,47 @@
-const User = require('../models/user');
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const nodemailer = require('nodemailer');
 
-exports.registerUser = async (req, res) => {
-  const { nome, cognome, email, password, razza } = req.body;
-  const hashedPassword = await bcrypt.hash(password, 10);
+const bcrypt = require('bcrypt');
+const { User } = require('../models');
+const generatePassword = require('../utils/generatePassword');
+const sendMail = require('../utils/sendMail');
 
-  const user = await User.create({ nome, cognome, email, password: hashedPassword, razza });
-  
-  // Invio email password automatica (esempio)
-  const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-      user: process.env.EMAIL_USER,
-      pass: process.env.EMAIL_PASS
+exports.register = async (req, res) => {
+  try {
+    const { nome, cognome, sesso, razza, email, caratteristiche } = req.body;
+
+    const existingUser = await User.findOne({ where: { email } });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email già registrata.' });
     }
-  });
 
-  await transporter.sendMail({
-    to: email,
-    subject: "Benvenuto su Eodum",
-    text: `La tua password: ${password}`
-  });
+    const plainPassword = generatePassword();
+    const hashedPassword = await bcrypt.hash(plainPassword, 10);
 
-  res.status(201).send(user);
-};
+    const newUser = await User.create({
+      nome,
+      cognome,
+      sesso,
+      razza,
+      email,
+      password: hashedPassword,
+      caratteristiche,
+      mustChangePassword: true
+    });
 
-exports.loginUser = async (req, res) => {
-  const { email, password } = req.body;
-  const user = await User.findOne({ where: { email } });
-  if (!user || !(await bcrypt.compare(password, user.password))) {
-    return res.status(401).send('Email o password errate');
+    await sendMail(
+      email,
+      'Registrazione completata - GDR Eodum',
+      `Benvenuto/a ${nome},
+
+La tua password temporanea è: ${plainPassword}
+
+Ti invitiamo a cambiarla al primo accesso.
+
+Buon gioco!`
+    );
+
+    res.status(201).json({ message: 'Registrazione completata. Controlla la tua email.' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Errore durante la registrazione.' });
   }
-
-  const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: '7d' });
-  res.send({ token });
-};
-
-exports.forgotPassword = async (req, res) => {
-  const { email } = req.body;
-  res.send(`Email di recupero inviata a ${email}`);
 };
