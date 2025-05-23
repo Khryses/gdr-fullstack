@@ -1,10 +1,14 @@
+// src/components/LoginModal.jsx
 import React, { useState } from 'react';
 import '../styles/modal.css';
 
-const LoginModal = () => {
+console.log("🎉 Rendering LoginModal");
+
+const LoginModal = ({ onClose }) => {
   const [mode, setMode] = useState('tab');
 
   const handleLogin = () => {
+    console.log("LoginModal: handleLogin, mode =", mode);
     const url = "/land";
     if (mode === 'popup') {
       window.open(url, 'EodumLand', 'width=1024,height=768');
@@ -27,6 +31,7 @@ const LoginModal = () => {
         <option value="popup">Apri in popup</option>
       </select>
       <button onClick={handleLogin}>Accedi</button>
+      <button onClick={onClose}>Chiudi</button>
       <a href="#">Hai dimenticato la password?</a>
     </div>
   );
