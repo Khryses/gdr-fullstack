@@ -7,27 +7,20 @@ import RegisterModal from "./components/RegisterModal";
 import ForgotPasswordModal from "./components/ForgotPasswordModal";
 
 export default function App() {
-  const [showLogin,    setShowLogin]    = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
   const [showRegister, setShowRegister] = useState(false);
-  const [showForgot,   setShowForgot]   = useState(false);
+  const [showForgot, setShowForgot] = useState(false);
 
   return (
     <>
       <Navbar
-        onLogin={()    => setShowLogin(true)}
+        onLogin={() => setShowLogin(true)}
         onRegister={() => setShowRegister(true)}
       />
       <HomePage />
-      
-      {showLogin && (
-        <LoginModal onClose={() => setShowLogin(false)} />
-      )}
-      {showRegister && (
-        <RegisterModal onClose={() => setShowRegister(false)} />
-      )}
-      {showForgot && (
-        <ForgotPasswordModal onClose={() => setShowForgot(false)} />
-      )}
+      {showLogin && <LoginModal onClose={() => setShowLogin(false)} />}
+      {showRegister && <RegisterModal onClose={() => setShowRegister(false)} />}
+      {showForgot && <ForgotPasswordModal onClose={() => setShowForgot(false)} />}
     </>
   );
 }

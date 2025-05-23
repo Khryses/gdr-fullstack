@@ -1,17 +1,18 @@
-import React from 'react';
-import '../styles/modal.css';
+// src/components/RegisterModal.jsx
+import React from "react";
+import "../styles/modal.css";
 
 const RegisterModal = ({ onClose }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert('Registrazione inviata!');
-    onClose?.();
+    // register logic here
+    onClose();
   };
 
   return (
     <div className="modal">
       <h2>Registrati a Eodum</h2>
-      <form onSubmit={handleSubmit} style={{ width: '100%' }}>
+      <form onSubmit={handleSubmit} style={{ width: "100%" }}>
         <label htmlFor="reg-given-name" className="sr-only">Nome</label>
         <input
           id="reg-given-name"
@@ -29,24 +30,6 @@ const RegisterModal = ({ onClose }) => {
           placeholder="Cognome"
           required
           autoComplete="family-name"
-        />
-        <label htmlFor="reg-sex" className="sr-only">Sesso</label>
-        <input
-          id="reg-sex"
-          name="sex"
-          type="text"
-          placeholder="Sesso"
-          required
-          autoComplete="sex"
-        />
-        <label htmlFor="reg-race" className="sr-only">Razza</label>
-        <input
-          id="reg-race"
-          name="race"
-          type="text"
-          placeholder="Razza"
-          required
-          autoComplete="off"
         />
         <label htmlFor="reg-email" className="sr-only">Email</label>
         <input
@@ -67,7 +50,7 @@ const RegisterModal = ({ onClose }) => {
           autoComplete="new-password"
         />
         <button type="submit">Registrati</button>
-        <button type="button" onClick={onClose} style={{ marginTop: '10px' }}>
+        <button type="button" onClick={onClose} style={{ marginTop: "10px" }}>
           Chiudi
         </button>
       </form>

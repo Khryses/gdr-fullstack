@@ -1,15 +1,11 @@
-
+// src/pages/HomePage.jsx
 import React from "react";
-import "../styles/HomePage.css";
-import Navbar from "../components/Navbar";
 
-const HomePage = () => {
+export default function HomePage() {
   return (
-    <div className="home-container">
-      <Navbar />
-      <h1 style={{ fontSize: "2rem", color: "#b0e0e6" }}>Benvenuto su Eodum</h1>
+    <div style={{ padding: "20px" }}>
+      <h1>Benvenuto su Eodum</h1>
+      <p>Esplora il mondo o accedi/registrati usando la navbar in alto.</p>
     </div>
   );
-};
-
-export default HomePage;
+}
