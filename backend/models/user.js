@@ -1,15 +1,26 @@
-const { DataTypes } = require('sequelize');
-const sequelize = require('../utils/database');
 
-const User = sequelize.define('User', {
-  id: { type: DataTypes.UUID, defaultValue: DataTypes.UUIDV4, primaryKey: true },
-  nome: { type: DataTypes.STRING, allowNull: false },
-  cognome: { type: DataTypes.STRING, allowNull: false },
-  email: { type: DataTypes.STRING, allowNull: false, unique: true },
-  password: { type: DataTypes.STRING, allowNull: false },
-  razza: { type: DataTypes.STRING, allowNull: false },
-  forza: { type: DataTypes.INTEGER, defaultValue: 1 },
-  carisma: { type: DataTypes.INTEGER, defaultValue: 1 },
+const { DataTypes } = require("sequelize");
+const sequelize = require("../config/database");
+
+const User = sequelize.define("User", {
+  nome: DataTypes.STRING,
+  cognome: DataTypes.STRING,
+  sesso: DataTypes.STRING,
+  razza: DataTypes.STRING,
+  email: DataTypes.STRING,
+  password: DataTypes.STRING,
+  livello: {
+    type: DataTypes.INTEGER,
+    defaultValue: 1,
+  },
+  reputazione: {
+    type: DataTypes.INTEGER,
+    defaultValue: 0,
+  },
+  caratteristiche: {
+    type: DataTypes.JSON,
+    defaultValue: {},
+  },
 });
 
 module.exports = User;
