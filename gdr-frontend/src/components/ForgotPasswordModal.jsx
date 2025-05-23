@@ -1,38 +1,37 @@
-// src/components/ForgotPasswordModal.jsx
-import React, { useState } from "react";
-import "../styles/modal.css";
+import React, { useState } from 'react';
+import { useDraggable } from '@dnd-kit/core';
+import '../styles/modal.css';
 
-const ForgotPasswordModal = ({ onClose }) => {
-  const [email, setEmail] = useState("");
+export default function ForgotPasswordModal({ onClose }) {
+  const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: 'forgot' });
+  const style = transform
+    ? { transform: `translate3d(${transform.x}px, ${transform.y}px, 0)` }
+    : undefined;
 
-  const handleForgot = (e) => {
+  const [email, setEmail] = useState('');
+
+  const handleSubmit = (e) => {
     e.preventDefault();
-    // forgot logic
+    alert(`Link di recupero inviato a ${email}`);
     onClose();
   };
 
   return (
-    <div className="modal">
+    <div ref={setNodeRef} style={style} {...listeners} {...attributes} className="modal">
+      <button className="modal-close" onClick={onClose}>×</button>
       <h2>Recupera Password</h2>
-      <form onSubmit={handleForgot} style={{ width: "100%" }}>
-        <label htmlFor="forgot-email" className="sr-only">Email</label>
+      <form onSubmit={handleSubmit}>
         <input
-          id="forgot-email"
-          name="email"
           type="email"
           placeholder="Email"
           value={email}
-          onChange={(e) => setEmail(e.target.value)}
+          onChange={e => setEmail(e.target.value)}
           required
           autoComplete="email"
         />
         <button type="submit">Invia</button>
-        <button type="button" onClick={onClose} style={{ marginTop: "10px" }}>
-          Chiudi
-        </button>
       </form>
     </div>
   );
-};
+}
 
-export default ForgotPasswordModal;
