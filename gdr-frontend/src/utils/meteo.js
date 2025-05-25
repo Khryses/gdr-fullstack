@@ -1,0 +1,1 @@
+export function getMeteoAttuale() { return { temperatura: 18, descrizione: 'Nuvoloso', luna: 'Piena' }; }

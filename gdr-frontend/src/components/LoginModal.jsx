@@ -1,54 +1,82 @@
-import React, { useState } from 'react';
-import { useDraggable } from '@dnd-kit/core';
-import '../styles/modal.css';
 
-export default function LoginModal({ onClose, onForgot }) {
-  const { attributes, listeners, setNodeRef, transform } = useDraggable({ id: 'login' });
-  const style = transform
-    ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
+import React, { useState } from "react";
+
+const LoginModal = ({ onClose, onForgot }) => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
+  const [openInPopup, setOpenInPopup] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleLogin = async () => {
+    setError("");
+    try {
+      const res = await fetch("http://localhost:4000/api/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) {
+        setError(data.message || "Errore imprevisto.");
+        return;
       }
-    : undefined;
 
-  const [mode, setMode] = useState('tab');
+      if (rememberMe) {
+        localStorage.setItem("token", data.token);
+      } else {
+        sessionStorage.setItem("token", data.token);
+      }
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // qui potresti chiamare l’API di login
-    window.open('/land', mode === 'popup' ? 'EodumLand' : '_blank', mode === 'popup' ? 'width=1024,height=768' : '');
+      if (openInPopup) {
+        window.open("/land", "_blank", "width=1200,height=800");
+      } else {
+        window.location.href = "/land";
+      }
+
+    } catch (err) {
+      setError("Errore di connessione.");
+    }
   };
 
   return (
-    <div ref={setNodeRef} style={style} {...listeners} {...attributes} className="modal">
-      <button className="modal-close" onClick={onClose}>×</button>
-      <h2>Accedi a Eodum</h2>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="login-email" className="sr-only">Email</label>
-        <input id="login-email" name="email" type="email" placeholder="Email" required autoComplete="email" />
-
-        <label htmlFor="login-password" className="sr-only">Password</label>
-        <input id="login-password" name="password" type="password" placeholder="Password" required autoComplete="current-password" />
-
-        <select
-          value={mode}
-          onChange={e => setMode(e.target.value)}
-          style={{ width: '100%', margin: '15px 0', padding: '10px' }}
-        >
-          <option value="tab">Apri in nuova scheda</option>
-          <option value="popup">Apri in popup</option>
-        </select>
-
-        <button type="submit">Accedi</button>
-      </form>
-      <a href="#" className="modal-link">Hai dimenticato la password?</a>
-      <button
-        type="button"
-        className="modal-link"
-        onClick={() => onForgot()}
-       style={{ background: 'none', border: 'none', color: 'cyan', cursor: 'pointer', textDecoration: 'underline', marginTop: '10px' }}
-      >
-        Hai dimenticato la password?
-     </button>
+    <div className="modal">
+      <h2>Login</h2>
+      {error && <p className="errore">{error}</p>}
+      <input
+        type="email"
+        placeholder="Email"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+      />
+      <label>
+        <input
+          type="checkbox"
+          checked={rememberMe}
+          onChange={() => setRememberMe(!rememberMe)}
+        />
+        Ricorda credenziali
+      </label>
+      <label>
+        <input
+          type="checkbox"
+          checked={openInPopup}
+          onChange={() => setOpenInPopup(!openInPopup)}
+        />
+        Apri in pop-up
+      </label>
+      <button onClick={handleLogin}>Accedi</button>
+      <button onClick={onForgot}>Password dimenticata?</button>
+      <button onClick={onClose}>Chiudi</button>
     </div>
   );
-}
+};
+
+export default LoginModal;

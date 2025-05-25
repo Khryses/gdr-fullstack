@@ -1,47 +1,62 @@
 
-const bcrypt = require('bcrypt');
-const { User } = require('../models');
-const generatePassword = require('../utils/generatePassword');
-const sendMail = require('../utils/sendMail');
+const jwt = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const { User } = require("../models");
 
-exports.register = async (req, res) => {
+let activeSessions = {};
+
+const login = async (req, res) => {
+  const { email, password } = req.body;
   try {
-    const { nome, cognome, sesso, razza, email, caratteristiche } = req.body;
-
-    const existingUser = await User.findOne({ where: { email } });
-    if (existingUser) {
-      return res.status(400).json({ message: 'Email già registrata.' });
+    if (!email || !password) {
+      return res.status(400).json({ message: "Email o password mancanti." });
     }
 
-    const plainPassword = generatePassword();
-    const hashedPassword = await bcrypt.hash(plainPassword, 10);
+    const user = await User.findOne({ where: { email } });
+    if (!user) {
+      return res.status(404).json({ message: "Utente non trovato." });
+    }
 
-    const newUser = await User.create({
-      nome,
-      cognome,
-      sesso,
-      razza,
-      email,
-      password: hashedPassword,
-      caratteristiche,
-      mustChangePassword: true
-    });
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) {
+      return res.status(401).json({ message: "Password errata." });
+    }
 
-    await sendMail(
-      email,
-      'Registrazione completata - GDR Eodum',
-      `Benvenuto/a ${nome},
+    const existing = activeSessions[user.id];
+    if (existing && existing.expireTime > Date.now()) {
+      return res.status(403).json({ message: "Sessione già attiva, riprova tra poco." });
+    }
 
-La tua password temporanea è: ${plainPassword}
+    const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET, { expiresIn: "2h" });
+    const expireTime = Date.now() + 2 * 60 * 1000;
 
-Ti invitiamo a cambiarla al primo accesso.
+    activeSessions[user.id] = { token, expireTime };
 
-Buon gioco!`
-    );
-
-    res.status(201).json({ message: 'Registrazione completata. Controlla la tua email.' });
+    res.json({ token, user });
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: 'Errore durante la registrazione.' });
+    console.error("❌ ERRORE BACKEND LOGIN:", err);
+    res.status(500).json({ message: "Errore interno al server." });
   }
+};
+
+const logout = (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    delete activeSessions[decoded.id];
+    res.json({ message: "Logout eseguito" });
+  } catch {
+    res.status(401).json({ message: "Token non valido" });
+  }
+};
+
+const isSessionActive = (userId) => {
+  const session = activeSessions[userId];
+  return session && session.expireTime > Date.now();
+};
+
+module.exports = {
+  login,
+  logout,
+  isSessionActive,
 };
